@@ -1,0 +1,9 @@
+# 1 control plane + 3 workers. Three workers make "spread across nodes, then
+# consolidate onto fewer nodes" visible in the demo.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+  - role: worker

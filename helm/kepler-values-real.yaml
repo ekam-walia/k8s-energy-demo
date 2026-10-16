@@ -1,0 +1,10 @@
+# Kepler values for REAL HARDWARE (bare metal, or a machine where RAPL/hwmon is readable).
+# This is the mode to use for the numbers you show on the results slide.
+config:
+  cpu:
+    # Tried in order; the first backend that initialises and reports zones is used.
+    preferredMeters: [rapl, hwmon]
+
+serviceMonitor:
+  enabled: true
+  interval: 15s

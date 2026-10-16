@@ -1,0 +1,25 @@
+# Minimal kube-prometheus-stack values for the demo.
+# Gives you: Prometheus, Grafana, kube-state-metrics, node-exporter, cAdvisor scraping.
+prometheus:
+  prometheusSpec:
+    # Pick up ServiceMonitors from any namespace (needed for Kepler's ServiceMonitor).
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    scrapeInterval: 15s
+    retention: 6h
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+
+grafana:
+  adminPassword: admin
+  defaultDashboardsTimezone: browser
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      searchNamespace: ALL
+
+alertmanager:
+  enabled: false

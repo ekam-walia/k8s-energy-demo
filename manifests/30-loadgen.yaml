@@ -1,0 +1,34 @@
+# Constant-rate load generator (fortio). Same QPS and duration for BEFORE and AFTER,
+# so the comparison is fair. The __PLACEHOLDERS__ are filled in by scripts/30-phase.sh.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: loadgen-__RUN__
+  namespace: demo
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: loadgen
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: fortio
+          image: fortio/fortio:latest_release
+          args:
+            - load
+            - -qps
+            - "__QPS__"
+            - -c
+            - "8"
+            - -t
+            - "__DURATION__"
+            - -p
+            - "50,90,95,99"
+            - http://demo-app.demo.svc.cluster.local/
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi

@@ -1,0 +1,15 @@
+# Kepler values for a LOCAL KIND CLUSTER (workflow demo only).
+#
+# kind nodes are containers on one host, so real power meters (RAPL) are either
+# missing or show the whole host for every "node". We use Kepler's built-in
+# "fake" CPU meter, which produces SYNTHETIC power numbers. Good for showing the
+# pipeline and the dashboards. NOT good for quoting energy figures.
+# (Kepler's own docs: do not enable the fake meter in production.)
+config:
+  cpu:
+    preferredMeters: [fake]
+
+# Creates a ServiceMonitor so kube-prometheus-stack scrapes Kepler.
+serviceMonitor:
+  enabled: true
+  interval: 15s
